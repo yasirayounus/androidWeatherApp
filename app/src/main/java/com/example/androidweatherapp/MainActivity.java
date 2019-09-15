@@ -27,7 +27,9 @@ public class MainActivity extends AppCompatActivity {
         new HttpRequests().execute("hello");
 
     }
-
+    public class getHttpAddress (){
+        
+    }
     private class HttpRequests extends AsyncTask<String, Void, String> {
 
         @Override
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             String API_KEY = "9ed8e0b221fae0211ec79d1ccb01c974";
             StringBuffer response = new StringBuffer();
             try {
-                //System.out.println("Hello");
+
                 URL url = new URL("https://api.darksky.net/forecast/" + API_KEY + "/" +latlng + "?exclude=minutely,hourly,daily,alerts,flags");
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("GET");
@@ -53,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
                 con.setRequestProperty("Content-Type", "application/json");
 
                 int responseCode = con.getResponseCode();
-                //System.out.println("RC:" + responseCode);
                 BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
                 String inputLine;
 
