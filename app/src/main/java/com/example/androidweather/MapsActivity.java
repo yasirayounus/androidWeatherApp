@@ -1,6 +1,10 @@
 package com.example.androidweather;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.fragment.app.FragmentActivity;
 
@@ -21,7 +25,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private static final String LATITUDE = "latitude";
     private static final String LONGITUDE = "longitude";
-
+    Button mRetryButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +34,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        mRetryButton = findViewById(R.id.buttonBack);
+        mRetryButton.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View view) {
+                        Intent backIntent = new Intent(MapsActivity.this, MainActivity.class);
+                        startActivity(backIntent);
+                    }
+                });
+
     }
 
 
@@ -52,6 +65,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng inputAddress = new LatLng(latNum, lngNum);
         mMap.addMarker(new MarkerOptions().position(inputAddress).title("Marker at Location"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(inputAddress));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(17.0f));
 
         String darkURL = "https://api.darksky.net/forecast/05ca222f08f58f2e81ebb62c497338a0/" + lat +"," + lng + "?exclude=minutely,hourly,daily,alerts,flags";
         HttpRequests http = new HttpRequests();
@@ -60,6 +74,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String response = null;
         try {
             response = http.get();
+            System.out.println(response);
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -77,6 +92,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        TextView weatherDisplay = findViewById(R.id.weather_info);
+        String megaWeather = "Temperature: " + weatherInfo[0] + "\nHumidity: " + weatherInfo[1] +
+                "\nWind Speed: " + weatherInfo[2] + "\nPrecipitation Intensity: " + weatherInfo[3] +
+                "\nPrecipitation Intensity Error: " + weatherInfo[4] + "\nPrecipitation Probability: " +
+                weatherInfo[5] + "\nPrecipitation Type: " + weatherInfo[6];
+        weatherDisplay.setText(megaWeather);
 
 
 

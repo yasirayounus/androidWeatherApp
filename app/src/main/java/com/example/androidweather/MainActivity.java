@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -73,15 +74,22 @@ public class MainActivity extends AppCompatActivity {
                                 JSONObject location = results.getJSONObject(i).getJSONObject("geometry").getJSONObject("location");;
                                 lat = location.optString("lat");
                                 lng = location.optString("lng");
+                                System.out.println(lat);
+                                System.out.println(lng);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-                        Intent mapsIntent = new Intent(MainActivity.this, MapsActivity.class);
-                        mapsIntent.putExtra(LATITUDE, lat);
-                        mapsIntent.putExtra(LONGITUDE, lng);
-                        startActivity(mapsIntent);
+                        if (lat != null && lng != null) {
+                            Intent mapsIntent = new Intent(MainActivity.this, MapsActivity.class);
+                            mapsIntent.putExtra(LATITUDE, lat);
+                            mapsIntent.putExtra(LONGITUDE, lng);
+                            startActivity(mapsIntent);
+                        } else {
+                            Toast myToast = Toast.makeText(MainActivity.this, "INVALID ADDRESS",
+                                    Toast.LENGTH_SHORT);
+                            myToast.show();
+                        }
                     }
                 });
 
