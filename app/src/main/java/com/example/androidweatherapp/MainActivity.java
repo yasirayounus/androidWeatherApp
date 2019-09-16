@@ -27,9 +27,8 @@ public class MainActivity extends AppCompatActivity {
         new HttpRequests().execute("hello");
 
     }
-    public class getHttpAddress (){
-        
-    }
+
+
     private class HttpRequests extends AsyncTask<String, Void, String> {
 
         @Override
