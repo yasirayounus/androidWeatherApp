@@ -42,22 +42,20 @@ public class MainActivity extends AppCompatActivity {
         mState = findViewById(R.id.stateField);
         mZipCode = findViewById(R.id.zipCodeField);
 
-        mSubmitButton.setOnClickListener(
-                new View.OnClickListener()
-                {
-                    public void onClick(View view)
-                    {
-                        String addLine1 = mAdd1.getText().toString();
+        mSubmitButton.setOnClickListener(           //action triggered on button click
+                new View.OnClickListener() {
+                    public void onClick(View view) {
+                        String addLine1 = mAdd1.getText().toString();       //get user input
                         String addLine2 = mAdd2.getText().toString();
                         String city = mCity.getText().toString();
                         String state = mState.getText().toString();
                         String zip = mZipCode.getText().toString();
                         formattedAddress = addLine1 + " " + addLine2 + " " + city + " " + state + " " + zip;
-                        formattedAddress.replace(' ', '+');
+                        formattedAddress.replace(' ', '+');     //reformat for url
                         String finalUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + formattedAddress + "&key=AIzaSyATf8zsOa012-zvbF-G3cglYTCeqKWaFBs";
                         HttpRequests http = new HttpRequests();
                         http.changeURL(finalUrl);
-                        http.execute();
+                        http.execute();         //call the http processor with google api and get response
                         String response = null;
                         String lat = null;
                         String lng = null;
@@ -69,9 +67,9 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             JSONObject myResponse = new JSONObject(response);
                             JSONArray results = myResponse.getJSONArray("results");
-                            for(int i=0;i<results.length();i++)
-                            {
-                                JSONObject location = results.getJSONObject(i).getJSONObject("geometry").getJSONObject("location");;
+                            for (int i = 0; i < results.length(); i++) {
+                                JSONObject location = results.getJSONObject(i).getJSONObject("geometry").getJSONObject("location");
+                                ;
                                 lat = location.optString("lat");
                                 lng = location.optString("lng");
                                 System.out.println(lat);
@@ -80,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        if (lat != null && lng != null) {
+                        if (lat != null && lng != null) {       //make sure that lat/lng are returned from api
                             Intent mapsIntent = new Intent(MainActivity.this, MapsActivity.class);
                             mapsIntent.putExtra(LATITUDE, lat);
                             mapsIntent.putExtra(LONGITUDE, lng);
@@ -88,54 +86,9 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             Toast myToast = Toast.makeText(MainActivity.this, "INVALID ADDRESS",
                                     Toast.LENGTH_SHORT);
-                            myToast.show();
+                            myToast.show();         //toast to show invalid address
                         }
                     }
                 });
-
-//        String finalUrl =
-
-//        HttpRequests http = new HttpRequests();
-//        String googleURL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
-//        String address = null;
-//        http.changeURL("googleURL");
-//        http.execute();
-//        String response = null;
-//        String lat  = null;
-//        String lng  = null;
-//        try {
-//            response = http.get();
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        try {
-//            JSONObject myResponse = new JSONObject(response);
-//            JSONArray results = myResponse.getJSONArray("results");
-//            for(int i=0;i<results.length();i++)
-//            {
-//                JSONObject location = results.getJSONObject(i).getJSONObject("geometry").getJSONObject("location");;
-//                lat  = location.optString("lat");
-//                lng  = location.optString("lng");
-//                System.out.println(lat);
-//                System.out.println(lng);
-//            }
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-       }
-
-//    public void convertAddress(String fullAdd){
-//        String addLine1 = mAdd1.getText().toString();
-//        String addLine2 = mAdd2.getText().toString();
-//        String city = mCity.getText().toString();
-//        String state = mState.getText().toString();
-//        String zip = mZipCode.getText().toString();
-//        fullAdd = addLine1 + " " + addLine2 + " " + city + " " + state + " " + zip;
-//        fullAdd.replace(' ', '+');
-//    }
-
-
+    }
 }

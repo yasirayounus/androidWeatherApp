@@ -39,7 +39,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 new View.OnClickListener() {
                     public void onClick(View view) {
                         Intent backIntent = new Intent(MapsActivity.this, MainActivity.class);
-                        startActivity(backIntent);
+                        startActivity(backIntent);          //go back to get another address if desired
                     }
                 });
 
@@ -63,13 +63,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Float latNum = Float.parseFloat(lat);
         Float lngNum = Float.parseFloat(lng);
         LatLng inputAddress = new LatLng(latNum, lngNum);
-        mMap.addMarker(new MarkerOptions().position(inputAddress).title("Marker at Location"));
+        mMap.addMarker(new MarkerOptions().position(inputAddress).title("Marker at Location"));     //add marker
         mMap.moveCamera(CameraUpdateFactory.newLatLng(inputAddress));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(17.0f));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(17.0f));      //zoom camera
 
-        String darkURL = "https://api.darksky.net/forecast/05ca222f08f58f2e81ebb62c497338a0/" + lat +"," + lng + "?exclude=minutely,hourly,daily,alerts,flags";
+        String darkURL = "https://api.darksky.net/forecast/05ca222f08f58f2e81ebb62c497338a0/" + lat + "," + lng + "?exclude=minutely,hourly,daily,alerts,flags";
         HttpRequests http = new HttpRequests();
-        http.changeURL(darkURL);
+        http.changeURL(darkURL);        //connect ot darksky api
         http.execute();
         String response = null;
         try {
@@ -97,7 +97,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String megaWeather = "Temperature: " + weatherInfo[0] + "\nHumidity: " + weatherInfo[1] +
                 "\nWind Speed: " + weatherInfo[2] + "\nPrecipitation Intensity: " + weatherInfo[3] +
                 "\nPrecipitation Intensity Error: " + weatherInfo[4] + "\nPrecipitation Probability: " +
-                weatherInfo[5] + "\nPrecipitation Type: " + weatherInfo[6];
+                weatherInfo[5] + "\nPrecipitation Type: " + weatherInfo[6];         //display weather information
         weatherDisplay.setText(megaWeather);
 
 
