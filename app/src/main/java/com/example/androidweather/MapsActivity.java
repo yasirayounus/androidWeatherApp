@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import java.util.concurrent.ExecutionException;
 
+//Yasira driving
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;

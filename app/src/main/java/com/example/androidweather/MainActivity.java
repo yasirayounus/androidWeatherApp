@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import java.util.concurrent.ExecutionException;
 
+//Yasira driving
 public class MainActivity extends AppCompatActivity {
 
     private static final String LATITUDE = "latitude";
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                         } catch (ExecutionException | InterruptedException e) {
                             e.printStackTrace();
                         }
+                        //end Yasira driving, Andrea driving
                         try {
                             JSONObject myResponse = new JSONObject(response);
                             JSONArray results = myResponse.getJSONArray("results");
