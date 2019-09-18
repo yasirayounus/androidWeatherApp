@@ -22,6 +22,7 @@ public class HttpRequests extends AsyncTask<String, Void, String> {
         StringBuffer response = new StringBuffer();
         try {
             URL url = new URL(this.url);
+            //Setting up connection
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setReadTimeout(15000);
@@ -29,6 +30,7 @@ public class HttpRequests extends AsyncTask<String, Void, String> {
             con.setDoInput(true);
             con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
+            //Reading error codes
             int responseCode = con.getResponseCode();
             System.out.println(responseCode);
 
@@ -43,7 +45,8 @@ public class HttpRequests extends AsyncTask<String, Void, String> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        
+        //Test to see if HTTP response is working
         System.out.println(response.toString());
         System.out.println("PRINTED");
         return response.toString();
