@@ -67,7 +67,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(inputAddress).title("Marker at Location"));     //add marker
         mMap.moveCamera(CameraUpdateFactory.newLatLng(inputAddress));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(17.0f));      //zoom camera
-
+        
+        //Yasira ending, Andrea driving now
         String darkURL = "https://api.darksky.net/forecast/05ca222f08f58f2e81ebb62c497338a0/" + lat + "," + lng + "?exclude=minutely,hourly,daily,alerts,flags";
         HttpRequests http = new HttpRequests();
         http.changeURL(darkURL);        //connect ot darksky api
@@ -80,6 +81,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             e.printStackTrace();
         }
         String[] weatherInfo = new String[7];
+        //Parsing through weather info to grab desired results
         try {
             JSONObject darkResponse = new JSONObject(response.toString());
             weatherInfo[0] = darkResponse.getJSONObject("currently").getString("temperature");
@@ -93,7 +95,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        //Formating weather display
         TextView weatherDisplay = findViewById(R.id.weather_info);
         String megaWeather = "Temperature: " + weatherInfo[0] + "\nHumidity: " + weatherInfo[1] +
                 "\nWind Speed: " + weatherInfo[2] + "\nPrecipitation Intensity: " + weatherInfo[3] +
